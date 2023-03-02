@@ -96,6 +96,7 @@ const submitHendler = async ()=>{
       try {
         
         await AuthStore.a_login(formData);
+        
         router.push('/');
 
       } catch (error) { }  

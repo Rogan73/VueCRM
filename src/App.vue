@@ -9,16 +9,17 @@ import { /*RouterLink, RouterView,useRouter,*/ useRoute,useRouter } from "vue-ro
 import EmptyLayout from '@/layouts/EmptyLayout.vue'
 import MainLayout from '@/layouts/MainLayout.vue'
 
+import { useAuthStore } from '@/stores/auth'
 
 
-
+    const AuthStore = useAuthStore()
     const router = useRouter()
     const route = useRoute()
 
 
 
 onMounted(async () => {
-
+ 
 })
 
 

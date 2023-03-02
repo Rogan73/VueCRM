@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { getDatabase } from "firebase/database";
 
 //import { useFirestore } from 'vuefire'
@@ -17,11 +17,20 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
+
+//console.log('auth plugin', auth);
+
 const database = getDatabase(app);
 
-auth.onAuthStateChanged(user => {
-    if (!user) console.log('onAuthStateChanged user', user);
-});
+// onAuthStateChanged(auth, (user) => {
+//         if (user){
+//              console.log('onAuthStateChanged user', user.uid);
+
+//         }
+//     })
+// auth.onAuthStateChanged(user => {
+//     if (!user) console.log('onAuthStateChanged user', user);
+// });
 
 export { auth, database }
 

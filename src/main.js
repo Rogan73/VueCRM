@@ -12,6 +12,8 @@ import messagePlugin from '@/plugins/message.plugin'
 import i18nPlugin from '@/plugins/i18n'
 import TranslateObject from './assets/translate.json'
 
+import Loader from '@/components/app/LoaderComp.vue'
+
 //import { auth } from '@/plugins/firebase.plugin'
 
 //import { firebaseApp } from './firebase'
@@ -26,6 +28,9 @@ app.use(router);
 app.use(messagePlugin);
 //app.use(firebasePlugin);
 app.use(i18nPlugin, TranslateObject)
+
+app.component('Loader', Loader);
+
 app.config.globalProperties.$filters = dateFilter
     //app.config.globalProperties.telegram = { token: "qweqweqweqweqwe", chatid: "rty564564564" }
 

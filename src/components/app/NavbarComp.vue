@@ -17,7 +17,7 @@
               data-target="dropdown"
               ref="dropdown1"
               >
-               {{userName}}
+               {{store.g_userName}}
                 <i class="material-icons right">arrow_drop_down</i>
               </a>
 
@@ -50,8 +50,11 @@ import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
 import { useRouter } from "vue-router";
 import dateFilter from '@/filters/date.filter'
 import { useAuthStore } from '@/stores/auth'
+import { useStore } from '@/stores/store'
 
 const AuthStore = useAuthStore()
+
+const store = useStore();
 
 
 const emit = defineEmits(['click']) 
@@ -80,7 +83,7 @@ onMounted( ()=>{
     date.value = dateFilter()
   },1000);
 
-  
+  //AuthStore.getUserData('/info'); // await
    
    
  dr = M.Dropdown.init(dropdown1.value,{

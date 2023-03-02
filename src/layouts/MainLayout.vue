@@ -41,19 +41,21 @@ import {onMounted} from 'vue'
 import NavbarComp from '../components/app/NavbarComp.vue'
 import SideBarComp from '../components/app/SideBarComp.vue'
 import { useAuthStore } from '@/stores/auth'
+import { useStore } from '@/stores/store'
 
 import {ref, computed} from 'vue'
 // import { RouterLink, RouterView,useRouter, useRoute } from "vue-router";
 
 const AuthStore = useAuthStore()
+const store = useStore();
 
 let isOpen=ref(true)
 let wd=computed( ()=>{
   return isOpen ? '':'full'
 })
 
-onMounted( ()=>{
-  // AuthStore.getUserData('/info/name')
+onMounted(async ()=>{
+  
 })
 
 </script>

@@ -10,17 +10,25 @@ export const useAuthStore = defineStore("auth", () => {
 
     const store = useStore();
 
+    onAuthStateChanged(auth, async(user) => {
+        if (user) {
+            //console.log('onAuthStateChanged user', user.uid);
+            const data = await getUserData('/info');
+            if (data) store.setUser(data);
+
+        }
+    })
+
     const a_login = async(obj) => {
         try {
-            const res = await signInWithEmailAndPassword(auth, obj.email, obj.password);
+            await signInWithEmailAndPassword(auth, obj.email, obj.password);
 
-            const data = getUserData('/info');
-            console.log('after getUserData');
-            //store.setUser(data)
+            const data = await getUserData('/info');
+            //console.log('after getUserData', data);
+            //store.setUser(data);
 
-            console.log('user', res.user);
 
-            return res.user;
+            return data;
         } catch (error) {
             console.log(error.message);
             store.setError(messages[error.code] || messages['errorAuth']);
@@ -31,6 +39,7 @@ export const useAuthStore = defineStore("auth", () => {
 
     const a_logout = async() => {
         await signOut();
+        store.setClearUser();
     };
 
     const a_register = async({ email, password, name }) => { // {email, password , name }
@@ -40,10 +49,14 @@ export const useAuthStore = defineStore("auth", () => {
             const res = await createUserWithEmailAndPassword(auth, email, password);
             const uid = getUid();
 
-            addToDB(`users/${uid}/info`, {
+            const data = {
                 bill: 10000,
                 name
-            })
+            };
+
+            addToDB(`users/${uid}/info`, data)
+            console.log('a_register');
+            store.setUser(data);
 
             return res.user;
 
@@ -65,15 +78,16 @@ export const useAuthStore = defineStore("auth", () => {
     }
 
     const getUserData = async(path) => { //    /info/name
+
+        //console.log('getUserData', path);
+
         try {
-
             const uid = auth.currentUser ? auth.currentUser.uid : null;
+            //console.log('uid', uid);
             const p = `/users/${uid+path}`
-            console.log('getUserData', p);
-            const res = await get(child(database, p));
-            console.log('get', res.val());
-
-            return '';
+            const res = await get(child(ref(database), p));
+            //console.log('get', res.val());
+            return res.val();
 
         } catch (error) {
             // console.log(error);
@@ -86,10 +100,14 @@ export const useAuthStore = defineStore("auth", () => {
 
 
     const getUid = () => {
+
+        //console.log('getUid auth', auth);
         const user = auth.currentUser
+            //console.log('getUid after', user);
+
         return user ? user.uid : null
     }
 
-    return { a_login, a_logout, a_register, addToDB, getUserData };
+    return { a_login, a_logout, a_register, addToDB, getUserData, getUid };
 
 });
