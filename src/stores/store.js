@@ -1,6 +1,7 @@
 import { ref, computed, getCurrentInstance } from "vue";
 import { defineStore } from "pinia";
 //import { useAuth } from "firebase/app";
+import currencyFilter from '@/filters/currency.filter'
 
 
 export const useStore = defineStore("store", () => {
@@ -44,11 +45,12 @@ export const useStore = defineStore("store", () => {
 
 
         ListCur.forEach(r => {
-            res.push(Math.floor(base * currency.value.rates[r]) + ' ' + r)
+            let value = Math.floor(base * currency.value.rates[r]);
+            res.push(currencyFilter(value, r))
         })
 
-        console.log('res', res);
-        setArrCurr.value = res;
+        //console.log('res', res);
+        ArrCurr.value = [...res];
     }
 
     const setCurBase = () => {
@@ -57,7 +59,7 @@ export const useStore = defineStore("store", () => {
         // console.log('UAH', currency.value.rates['UAH']);
         // console.log('EUR', currency.value.rates['EUR']);
 
-        CurBase.value = Math.floor(user.value.bill / currency.value.rates['UAH'] / currency.value.rates['EUR'])
+        CurBase.value = (user.value.bill / currency.value.rates['UAH'] / currency.value.rates['EUR'])
 
     }
 

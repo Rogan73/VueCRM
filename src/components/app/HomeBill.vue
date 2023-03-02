@@ -6,10 +6,10 @@
 
           <p 
           class="currency-line"
-          v-for="cur,i in store.gArrCurr"
+          v-for="item,i in store.gArrCurr"
           :key="i"
           >
-            <span>{{cur}} грн</span>
+            <span>{{item}}</span>
           </p>
         </div>
       </div>
@@ -18,5 +18,6 @@
 
 <script setup>
 import { useStore } from '@/stores/store'
+//import dateFilter from '@/filters/currency.filter'
 const store = useStore();
 </script>

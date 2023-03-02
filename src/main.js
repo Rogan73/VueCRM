@@ -6,7 +6,8 @@ import App from "./App.vue";
 import router from "./router";
 import "./assets/main.css";
 //import "./assets/materialize.min";
-import dateFilter from '@/filters/date.filter'
+//import dateFilter from '@/filters/date.filter'
+//import currencyFilter from '@/filters/currency.filter'
 
 import messagePlugin from '@/plugins/message.plugin'
 import i18nPlugin from '@/plugins/i18n'
@@ -31,8 +32,16 @@ app.use(i18nPlugin, TranslateObject)
 
 app.component('Loader', Loader);
 
-app.config.globalProperties.$filters = dateFilter
-    //app.config.globalProperties.telegram = { token: "qweqweqweqweqwe", chatid: "rty564564564" }
+//app.config.globalProperties.$filters = dateFilter
+//app.config.globalProperties.$filters = currencyFilter
+
+//app.use(dateFilter);
+//app.use(currencyFilter);
+
+
+
+
+//app.config.globalProperties.telegram = { token: "qweqweqweqweqwe", chatid: "rty564564564" }
 
 // app.use(VueFire, {
 //     // imported above but could also just be created here
