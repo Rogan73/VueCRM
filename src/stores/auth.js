@@ -55,7 +55,7 @@ export const useAuthStore = defineStore("auth", () => {
             };
 
             addToDB(`users/${uid}/info`, data)
-            console.log('a_register');
+                //console.log('a_register');
             store.setUser(data);
 
             return res.user;

@@ -80,10 +80,9 @@ let dr=null;
 onMounted( ()=>{
 
   timer=setInterval( ()=>{
-    date.value = dateFilter()
+    date.value = dateFilter(new Date)
   },1000);
 
-  //AuthStore.getUserData('/info'); // await
    
    
  dr = M.Dropdown.init(dropdown1.value,{

@@ -2,6 +2,7 @@ import { ref, computed, getCurrentInstance } from "vue";
 import { defineStore } from "pinia";
 //import { useAuth } from "firebase/app";
 import currencyFilter from '@/filters/currency.filter'
+import dateFilter from '@/filters/date.filter'
 
 
 export const useStore = defineStore("store", () => {
@@ -37,8 +38,12 @@ export const useStore = defineStore("store", () => {
         return ArrCurr.value;
     })
 
+
+
     const setArrCurr = () => {
         let res = []
+        let res2 = []
+
         const base = gCurBase.value
             //        console.log('base', base);
             //        console.log('rates', currency.value.rates);
@@ -46,7 +51,16 @@ export const useStore = defineStore("store", () => {
 
         ListCur.forEach(r => {
             let value = Math.floor(base * currency.value.rates[r]);
-            res.push(currencyFilter(value, r))
+            let curs = (currency.value.rates[r]).toFixed(3);
+            //console.log('currency.value.date', currency.value.date);
+
+            res.push({
+                value1: currencyFilter(value, r),
+                value2: curs,
+                name: r,
+                date: dateFilter(currency.value.date, 'short')
+            })
+
         })
 
         //console.log('res', res);
@@ -103,6 +117,15 @@ export const useStore = defineStore("store", () => {
     })
 
 
+    const updateCurrencies = async() => {
+        setLoader(true);
+        const c = await fetchCurrency();
+        setCurrency(c);
+        setCurBase();
+        setArrCurr();
+        setLoader(false);
+    }
+
     const fetchCurrency = async() => {
         //console.log('fetchCurrency');
 
@@ -128,6 +151,6 @@ export const useStore = defineStore("store", () => {
     }
 
 
-    return { error, setError, setUser, g_user, g_userName, setClearUser, fetchCurrency, gLoader, gCurBase, gArrCurr };
+    return { error, setError, setUser, g_user, g_userName, setClearUser, fetchCurrency, gLoader, gCurBase, gArrCurr, updateCurrencies };
 
 });

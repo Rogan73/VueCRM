@@ -9,7 +9,7 @@
           v-for="item,i in store.gArrCurr"
           :key="i"
           >
-            <span>{{item}}</span>
+            <span>{{item.value1}}</span>
           </p>
         </div>
       </div>
